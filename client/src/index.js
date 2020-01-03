@@ -19,6 +19,3 @@ const store = configureStore(preloadedState);
 };
 
 (async () => renderApp(await checkLoggedIn()))();
-
-// FOR TESTING, remove before production
-// window.getState = store.getState;

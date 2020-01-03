@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { logout } from '../actions/session';
 import PopularGames from './games/popular';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from 'react-bootstrap/Container';
 
 const mapStateToProps = ({ session }) => ({
     session
@@ -12,13 +14,10 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const Dashboard = ({ logout, session }) => (
-    <>
-
-        <h1>Hi {session.username}</h1>
-        <p>You are now logged in!</p>
-        <button onClick={logout}>Logout</button>
+    <Container>
+    <h3>Welcome back {session.username}</h3>
         <PopularGames />
-    </>
+    </Container>
 );
 
 export default connect(

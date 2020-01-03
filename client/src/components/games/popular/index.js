@@ -52,7 +52,10 @@ class PopularGames extends Component {
                     <h3>Popular Games</h3>
                     {games.map(game => (
                         <div key={game.id}>
-                            <img src={`https://images.igdb.com/igdb/image/upload/t_screenshot_med/${game.screenshots[0].image_id}.jpg`} />
+                            <img 
+                                src={`https://images.igdb.com/igdb/image/upload/t_cover_uniform/${game.cover.image_id}.jpg`}
+                                alt={game.name}
+                             />
                             {game.name}
                         </div>
                     ))}
