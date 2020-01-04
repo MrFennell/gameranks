@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Link } from 'react-router-dom';
 class PopularGames extends Component {
     constructor(props) {
         super(props);
@@ -10,7 +10,6 @@ class PopularGames extends Component {
             isLoaded: false
         }
     }
-    
     componentDidMount(){
         this.getPopular();
     }
@@ -56,7 +55,16 @@ class PopularGames extends Component {
                                 src={`https://images.igdb.com/igdb/image/upload/t_cover_uniform/${game.cover.image_id}.jpg`}
                                 alt={game.name}
                              />
-                            {game.name}
+                            <Link to={{
+                                pathname:"/games/" + game.slug,
+                                state: {
+                                    gameId: game.id,
+                                    gameName: game.name
+                                }
+                                }}>
+                                {game.name}
+                                
+                            </Link>
                         </div>
                     ))}
                 </>

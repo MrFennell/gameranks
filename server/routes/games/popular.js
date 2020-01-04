@@ -13,7 +13,7 @@ PopularRoutes.post('', async (req, res) => {
                 'Accept': 'application/json',
                 'user-key': GAME_API
             },
-            data:'fields name,cover.image_id,popularity; sort popularity desc;'
+            data:'fields name,cover.image_id,popularity,slug; sort popularity desc;'
         })
         if (games) {
             res.json(games.data);

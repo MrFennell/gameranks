@@ -19,7 +19,7 @@ class Topnav extends React.Component{
         if(user){
             return(
                 <Navbar>
-                <Navbar.Brand>Gameranks</Navbar.Brand>
+                    <Navbar.Brand>Gameranks</Navbar.Brand>
                     <Link to='/dashboard'>{user}</Link>
                     <button onClick={this.props.logout}>Logout</button>
                 </Navbar>
@@ -34,7 +34,6 @@ class Topnav extends React.Component{
                 </Navbar>
             )
         }
-        
     }
 }
 
