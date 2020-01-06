@@ -6,35 +6,36 @@ import Dashboard from './Dashboard';
 import Topnav from './Topnav';
 import { connect } from 'react-redux';
 import { Route, Redirect } from  "react-router-dom";
-import { 
+import {
   AuthRoute, 
   ProtectedRoute 
 } from "../util/route";
 
+import Single from "./games/single";
 import Games from "./games";
 
 const mapStateToProps = ({ session }) => ({
     session
 });
 
-
 class App extends React.Component{
 
   render(){
     const user = this.props.session.username;
     return (
-      <>
+      <div className="container">
         <Topnav session={this.props.session}/>
 
         <Route exact path="/"> 
           {user ? <Redirect to="/dashboard" /> : <Welcome /> }
         </Route>
-        <Route path="/games/:gameName" component={Games} />
+        <Route path="/games/:gameName" component={Single} />
+        <Route exact path="/games" component={Games} />
         <AuthRoute path="/login" component={Login} />
         <AuthRoute path="/signup" component={Signup} />
         <ProtectedRoute path="/dashboard" component={Dashboard} />
         
-      </>
+      </div>
     )
   }
 }

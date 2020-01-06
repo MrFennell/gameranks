@@ -18,20 +18,26 @@ class Topnav extends React.Component{
         const user = this.props.session.username;
         if(user){
             return(
-                <Navbar>
-                    <Navbar.Brand>Gameranks</Navbar.Brand>
-                    <Link to='/dashboard'>{user}</Link>
-                    <button onClick={this.props.logout}>Logout</button>
-                </Navbar>
+                <div className="container">
+                    <Navbar>
+                        <Navbar.Brand>Gameranks</Navbar.Brand>
+                        <Link to='/dashboard'>{user}</Link>
+                        <Link to='/games'>Games</Link>
+                        <button onClick={this.props.logout}>Logout</button>
+                    </Navbar>
+                </div>
             )
         }
         else{
             return(
+                <div className="container">
                 <Navbar>
                 <Navbar.Brand>Gameranks</Navbar.Brand>
                     <Link to='/login'>Login</Link>
                     <Link to='/signup'>Signup</Link>
+                    <Link to='/games'>Games</Link>
                 </Navbar>
+                </div>
             )
         }
     }
