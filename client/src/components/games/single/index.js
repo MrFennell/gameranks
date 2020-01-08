@@ -3,7 +3,12 @@ import React from 'react';
 // import Artworks from './gamedetails/Artworks';
 // import { HeaderBanner } from './gamedetails/HeaderBanner';
 
+
 import Ratings from './Ratings';
+import Platforms from './Platforms'
+import GameModes from './GameModes'
+import Genres from './Genres'
+import Companies from './Companies'
 
 class Single extends React.Component {
     constructor(props) {
@@ -12,7 +17,7 @@ class Single extends React.Component {
         this.state = {
             gameResult: {},
             errors: null,
-            isLoaded: false
+            isLoaded: false,
         }
     }
     componentDidMount(props){
@@ -41,6 +46,7 @@ class Single extends React.Component {
                 }
             )
     }
+   
     render(){
         const {errors, isLoaded} = this.state;
         const game = this.state.gameResult[0];
@@ -49,23 +55,36 @@ class Single extends React.Component {
             return <div>Error: {errors}</div>;
         }else if (!isLoaded){
                 return (
-                <>
-                    <div>Loading...</div>;
-                </>
+                    <>
+                        <div>Loading...</div>;
+                    </>
                 )
         }else {
             return (
                 <div className="container">
                     {/* <div id="header-banner" style={{backgroundImage: `url(https://images.igdb.com/igdb/image/upload/t_cover_un iform/${game.cover.image_id}.jpg)`}} > */}
-                    <div>
+                    <div className="game-summary">
                         <img 
                             src={`https://images.igdb.com/igdb/image/upload/t_cover_uniform/${game.cover.image_id}.jpg`}
                             alt={game.name}
                         />
-                        <Ratings />
+                        <Ratings game={game} />
+                         
                         <h3>{game.name}</h3>
                         <p>{game.summary}</p>
                         
+                    </div>
+                    <div className="game-platform">
+                       <Platforms platforms={game.platforms}/>
+                    </div>
+                    <div className="game-game-modes">
+                       <GameModes game_modes={game.game_modes}/>
+                    </div>
+                    <div className="game-genres">
+                       <Genres genres={game.genres}/>
+                    </div>
+                    <div className="game-companies">
+                       <Companies companies={game.involved_companies}/>
                     </div>
                     
                     {/* <Screenshots 

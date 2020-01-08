@@ -6,6 +6,7 @@ import Dashboard from './Dashboard';
 import Topnav from './Topnav';
 import { connect } from 'react-redux';
 import { Route, Redirect } from  "react-router-dom";
+import { loadGames } from '../actions/profile';
 import {
   AuthRoute, 
   ProtectedRoute 
@@ -18,10 +19,16 @@ const mapStateToProps = ({ session }) => ({
     session
 });
 
-class App extends React.Component{
+const mapDispatchToProps = dispatch => ({
+    loadGames: () => dispatch(loadGames())
+});
 
+
+class App extends React.Component{
+componentDidMount = () => this.props.loadGames();
   render(){
     const user = this.props.session.username;
+    
     return (
       <div className="container">
         <Topnav session={this.props.session}/>
@@ -42,4 +49,6 @@ class App extends React.Component{
 
 export default connect(
     mapStateToProps,
+    
+    mapDispatchToProps
 )(App);

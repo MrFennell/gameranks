@@ -1,6 +1,8 @@
 import express from 'express';
 import Joi from '@hapi/joi';
 import User from '../models/user';
+import Profile from '../models/Profile';
+
 import { signIn } from '../validations/user';
 import { parseError, sessionizeUser } from '../util/helpers';
 
@@ -18,7 +20,15 @@ sessionRouter.post('', async (req, res) => {
             const sessionUser = sessionizeUser(user);
             
             req.session.user = sessionUser
-            res.send(sessionUser);
+            if (sessionUser){
+                const profile = await Profile.findOne({username: sessionUser.username});
+                sessionUser.Profile = profile;
+                res.send(sessionUser);
+            }
+            else{
+                res.send(sessionUser);
+            }
+            // 
         }else{
             throw new Error('Invalid login credentials');
         }
@@ -33,7 +43,7 @@ sessionRouter.delete('', ({ session }, res) => {
         if (user){
             session.destroy(err => {
                 if (err) throw (err);
-
+                
                 res.clearCookie(SESS_NAME);
                 res.send(user);
             });

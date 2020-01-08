@@ -4,8 +4,9 @@ import { logout } from '../../actions/session';
 import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 
-const mapStateToProps = ({ session }) => ({
-    session
+const mapStateToProps = ({ session, games }) => ({
+    session,
+    games
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -31,12 +32,12 @@ class Topnav extends React.Component{
         else{
             return(
                 <div className="container">
-                <Navbar>
-                <Navbar.Brand>Gameranks</Navbar.Brand>
-                    <Link to='/login'>Login</Link>
-                    <Link to='/signup'>Signup</Link>
-                    <Link to='/games'>Games</Link>
-                </Navbar>
+                    <Navbar>
+                    <Navbar.Brand>Gameranks</Navbar.Brand>
+                        <Link to='/login'>Login</Link>
+                        <Link to='/signup'>Signup</Link>
+                        <Link to='/games'>Games</Link>
+                    </Navbar>
                 </div>
             )
         }
