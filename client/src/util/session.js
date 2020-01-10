@@ -19,13 +19,12 @@ export const login = user => (
 );
 
 export const logout = () => (
-    fetch("api/session", { method: "DELETE" })
+    fetch("/api/session", { method: "DELETE" })
 );
 
 export const checkLoggedIn = async preloadedState => {
     const response = await fetch('/api/session');
     const { user } = await response.json();
-    console.log('response +'+response);
     if (user) {
         preloadedState = {
             session: user

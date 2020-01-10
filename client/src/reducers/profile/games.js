@@ -1,7 +1,7 @@
 import {
     UPDATE_PROFILE_GAME_LIKE,
-    LOAD_PROFILE_GAMES
-} from '../../actions/profile';
+    LOAD_PROFILE_GAMES,
+} from 'actions/profile';
 
 export default (state = [], {type, games}) => {
     Object.freeze(state);
@@ -13,7 +13,6 @@ export default (state = [], {type, games}) => {
             
             const likes = games.likes;
             const found = state.find(x => x.game_id === games.game_id);
-            console.log(found);
             if (found){
                 return state.map((item, index) => {
                 if(item.game_id === games.game_id){
@@ -30,7 +29,6 @@ export default (state = [], {type, games}) => {
                     games
                 ]
             }
-            
         default:
             return state;
     }

@@ -37,8 +37,11 @@ export const signup = user => async dispatch => {
 export const logout = () => async dispatch => {
     const response = await apiUtil.logout();
     const data = await response.json();
-
+    
     if (response.ok) {
+        // const clearGames = await dispatch(clearProfileGames())
+        // const clearUser = await dispatch(logoutCurrentUser())
+        // return (clearGames, clearUser);
         return dispatch(logoutCurrentUser());
     }
     return dispatch(receiveErrors(data));

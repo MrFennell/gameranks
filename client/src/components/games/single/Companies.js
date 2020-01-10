@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 const Companies = (props) => {
     const companies = props.companies;
     

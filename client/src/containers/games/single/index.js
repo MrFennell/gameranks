@@ -3,12 +3,11 @@ import React from 'react';
 // import Artworks from './gamedetails/Artworks';
 // import { HeaderBanner } from './gamedetails/HeaderBanner';
 
-
-import Ratings from './Ratings';
-import Platforms from './Platforms'
-import GameModes from './GameModes'
-import Genres from './Genres'
-import Companies from './Companies'
+import Ratings from 'components/games/single/Ratings';
+import Platforms from 'components/games/single/Platforms'
+import GameModes from 'components/games/single/GameModes'
+import Genres from 'components/games/single/Genres'
+import Companies from 'components/games/single/Companies'
 
 class Single extends React.Component {
     constructor(props) {
@@ -24,6 +23,7 @@ class Single extends React.Component {
         const gameId = this.props.location.state.gameId;
         this.getGame(gameId);
     }
+    //get game from api
     async getGame(gameId){
         await fetch('/api/game',{
             method:"POST",
@@ -46,7 +46,11 @@ class Single extends React.Component {
                 }
             )
     }
-   
+    //check if game is in user store
+    async CheckStore(){
+
+    }
+
     render(){
         const {errors, isLoaded} = this.state;
         const game = this.state.gameResult[0];
