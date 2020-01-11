@@ -3,6 +3,8 @@ import { receiveErrors } from './error';
 
 export const LOAD_PROFILE_GAMES = 'LOAD_PROFILE_GAMES';
 export const UPDATE_PROFILE_GAME_LIKE = 'UPDATE_PROFILE_GAME_LIKE';
+export const UPDATE_PROFILE_GAME_PLAYED = 'UPDATE_PROFILE_GAME_PLAYED';
+
 // export const CLEAR_PROFILE_GAMES = 'CLEAR_PROFILE_GAMES';
 
 const loadProfileGames = games => ({
@@ -15,6 +17,10 @@ const updateProfileGameLike = games => ({
     games
 });
 
+const updateProfileGamePlayed = games => ({
+    type: UPDATE_PROFILE_GAME_PLAYED,
+    games
+});
 
 export const loadGames = games => async dispatch => {
 
@@ -26,14 +32,6 @@ export const loadGames = games => async dispatch => {
         return dispatch(receiveErrors(data));
 }
 
-export const like = games => async dispatch => {
-    const response = await apiUtil.updateLike(games);
-    const data = await response.json();
-    if (response.ok) {
-        return dispatch(updateProfileGameLike(data));
-    }
-    return dispatch(receiveErrors(data));
-}
 
 export const addLike = games => async dispatch => {
     games.likes = true;
@@ -51,6 +49,27 @@ export const removeLike = games => async dispatch => {
     const data = await response.json();
     if (response.ok) {
         return dispatch(updateProfileGameLike(data));
+    }
+    return dispatch(receiveErrors(data));
+}
+
+export const addPlayed = games => async dispatch => {
+    games.played = true;
+    games.param = 'played';
+    const response = await apiUtil.updatePlayed(games);
+    const data = await response.json();
+    if (response.ok) {
+        return dispatch(updateProfileGamePlayed(data));
+    }
+    return dispatch(receiveErrors(data));
+}
+
+export const removePlayed = games => async dispatch => {
+    games.played = false;
+    const response = await apiUtil.updatePlayed(games);
+    const data = await response.json();
+    if (response.ok) {
+        return dispatch(updateProfileGamePlayed(data));
     }
     return dispatch(receiveErrors(data));
 }

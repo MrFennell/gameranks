@@ -18,4 +18,14 @@ export const updateLike = game => (
     })
 );
 
+export const updatePlayed = game => (
+    fetch("/api/profile/played", {
+        method: "POST",
+        body: JSON.stringify(game),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+);
+
 
