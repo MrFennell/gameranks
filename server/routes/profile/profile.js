@@ -33,13 +33,14 @@ ProfileRoutes.get('/loadGames', async (req, res) => {
 
 ProfileRoutes.post('/likes', async (req, res) => {
  try {
-        const { game } = req.body;
+        const game = req.body;
+        console.log('like incoming: '+game.likes);
         if(game){
                 
             //search for user profile
             const sessionUser =  req.session.user.username;
             const profile = await Profile.findOne({username: sessionUser});
-            const like = true;
+            const like = game.likes;
             
             if (profile){
                 //check for existing game entry

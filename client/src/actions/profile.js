@@ -15,25 +15,15 @@ const updateProfileGameLike = games => ({
     games
 });
 
-// const clearProfileGames = games => ({
-//     type: CLEAR_PROFILE_GAMES,
-//     games
-// });
 
 export const loadGames = games => async dispatch => {
-    // console.log('loadGames: '+games)
-    // if (games === undefined || games === null){
-    //     console.log('games are null')
-    //     return [];
-    // }
-    // else{
+
         const response = await apiUtil.loadGames(games);
         const data = await response.json();
         if (response.ok) {
             return dispatch(loadProfileGames(data));
         }
         return dispatch(receiveErrors(data));
-    // }
 }
 
 export const like = games => async dispatch => {
@@ -45,8 +35,22 @@ export const like = games => async dispatch => {
     return dispatch(receiveErrors(data));
 }
 
-// export const clearGames = () => async dispatch => {
-//     const response = await apiUtil.updateLike(games);
-//     const data = await response.json();
-//     return dispatch(clearProfileGames(data))
-// }
+export const addLike = games => async dispatch => {
+    games.likes = true;
+    const response = await apiUtil.updateLike(games);
+    const data = await response.json();
+    if (response.ok) {
+        return dispatch(updateProfileGameLike(data));
+    }
+    return dispatch(receiveErrors(data));
+}
+
+export const removeLike = games => async dispatch => {
+    games.likes = false;
+    const response = await apiUtil.updateLike(games);
+    const data = await response.json();
+    if (response.ok) {
+        return dispatch(updateProfileGameLike(data));
+    }
+    return dispatch(receiveErrors(data));
+}

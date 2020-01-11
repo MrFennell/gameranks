@@ -68,7 +68,6 @@ SingleGameRoutes.post('', async (req, res) => {
         'popularity,slug; where id = '+gameId+';'
     })
     .then(e => {
-        console.log(e.data);
         res.json(e.data);
     })
     .catch(err => {

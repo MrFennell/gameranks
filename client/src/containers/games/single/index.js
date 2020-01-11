@@ -2,12 +2,16 @@ import React from 'react';
 // import Screenshots from './gamedetails/Screenshots';
 // import Artworks from './gamedetails/Artworks';
 // import { HeaderBanner } from './gamedetails/HeaderBanner';
+import { connect } from 'react-redux';
+import Ratings from './Ratings';
+import Platforms from './game-data/Platforms'
+import GameModes from './game-data/GameModes'
+import Genres from './game-data/Genres'
+import Companies from './game-data/Companies'
 
-import Ratings from 'components/games/single/Ratings';
-import Platforms from 'components/games/single/Platforms'
-import GameModes from 'components/games/single/GameModes'
-import Genres from 'components/games/single/Genres'
-import Companies from 'components/games/single/Companies'
+ const mapStateToProps = ({ session, games }) => ({
+    session, games
+})
 
 class Single extends React.Component {
     constructor(props) {
@@ -17,11 +21,28 @@ class Single extends React.Component {
             gameResult: {},
             errors: null,
             isLoaded: false,
+            inUserMemory: false,
+            likes: false,
+            owned: false
         }
     }
     componentDidMount(props){
         const gameId = this.props.location.state.gameId;
         this.getGame(gameId);
+        
+    }
+    findGameInStore = () => {
+        const game = this.state.gameResult[0];
+        console.log(game)
+        const findGame = this.props.games.find(e => e.game_id === game.id);
+        if (findGame){
+            this.setState
+                ({
+                    inUserMemory: true,
+                    likes: (findGame.likes ? findGame.likes : false),
+                    owned:(findGame.owned ? findGame.owned : false)
+                });
+        }
     }
     //get game from api
     async getGame(gameId){
@@ -35,7 +56,8 @@ class Single extends React.Component {
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        gameResult: result
+                        gameResult: result,
+                        storedGame: {}
                     });
                 },
                 (errors) => {
@@ -45,6 +67,9 @@ class Single extends React.Component {
                     });
                 }
             )
+        .then(
+            this.findGameInStore
+        )
     }
     //check if game is in user store
     async CheckStore(){
@@ -52,6 +77,7 @@ class Single extends React.Component {
     }
 
     render(){
+        
         const {errors, isLoaded} = this.state;
         const game = this.state.gameResult[0];
         
@@ -65,6 +91,7 @@ class Single extends React.Component {
                 )
         }else {
             return (
+                
                 <div className="container">
                     {/* <div id="header-banner" style={{backgroundImage: `url(https://images.igdb.com/igdb/image/upload/t_cover_un iform/${game.cover.image_id}.jpg)`}} > */}
                     <div className="game-summary">
@@ -72,7 +99,12 @@ class Single extends React.Component {
                             src={`https://images.igdb.com/igdb/image/upload/t_cover_uniform/${game.cover.image_id}.jpg`}
                             alt={game.name}
                         />
-                        <Ratings game={game} />
+                       
+                        <Ratings 
+                        
+                            id={game.id}
+                        
+                        />
                          
                         <h3>{game.name}</h3>
                         <p>{game.summary}</p>
@@ -105,4 +137,8 @@ class Single extends React.Component {
     }
 };
 
-export default Single;
+export default connect(
+    mapStateToProps
+    // ,
+    // mapDispatchToProps
+)(Single);
