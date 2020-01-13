@@ -17,7 +17,6 @@ export const updateLike = game => (
         }
     })
 );
-
 export const updatePlayed = game => (
     fetch("/api/profile/played", {
         method: "POST",

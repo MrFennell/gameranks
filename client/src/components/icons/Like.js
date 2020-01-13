@@ -5,7 +5,7 @@ import { AiOutlineLike } from 'react-icons/ai';
 
 const Like = (props) => {
     return (
-            <AiOutlineLike className={props.className} style={props.style} />
+        <AiOutlineLike className={props.className} style={props.style} />
     );
 };
 

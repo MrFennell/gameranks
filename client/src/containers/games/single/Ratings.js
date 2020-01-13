@@ -6,8 +6,10 @@ import {
     addLike, 
     removeLike, 
     addPlayed,
-    removePlayed
-    }from 'actions/profile';
+    removePlayed,
+    addWant,
+    removeWant
+    }from 'actions/profile/games';
 import Played from 'components/icons/Played';
 import Like from 'components/icons/Like';
 
@@ -19,7 +21,9 @@ const mapDispatchToProps = (dispatch, ownProps)=> ({
     addLike: () => dispatch(addLike(ownProps)),
     removeLike: () => dispatch(removeLike(ownProps)),
     addPlayed: () => dispatch(addPlayed(ownProps)),
-    removePlayed: () => dispatch(removePlayed(ownProps))
+    removePlayed: () => dispatch(removePlayed(ownProps)),
+    addWant: () => dispatch(addWant(ownProps)),
+    removeWant: () => dispatch(removeWant(ownProps))
 });
 
 class Ratings extends Component {
@@ -32,7 +36,7 @@ class Ratings extends Component {
             likes:false,
             owned: false,
             played: false,
-            wishlist: false
+            want: false
         }
     }
     
@@ -47,6 +51,7 @@ class Ratings extends Component {
                     likes: (gameResult.likes ? gameResult.likes : false),
                     owned:(gameResult.owned ? gameResult.owned : false),
                     played: (gameResult.played ? gameResult.played : false),
+                    want: (gameResult.want ? gameResult.want : false),
                 });
         }
     }
@@ -72,6 +77,16 @@ class Ratings extends Component {
             this.props.addPlayed()
         }
     }
+    setWant = () => {
+        if (this.state.want === true){
+            this.setState({want: false})
+            this.props.removeWant()
+        }
+        else{
+            this.setState({want: true})
+            this.props.addWant()
+        }
+    }
     render() {
         
         const iconTrue = {
@@ -82,10 +97,13 @@ class Ratings extends Component {
         }
         const likeStyle = ((this.state.likes === true) ? iconTrue : iconFalse)
         const playedStyle = ((this.state.played === true) ? iconTrue : iconFalse)
+        const wantStyle = ((this.state.want === true) ? iconTrue : iconFalse)
         if (this.props.session.userId){
             return (
                 <div>
-                    <Want className="single-game-icon" />
+                    <div onClick={this.setWant}>
+                       <Want style={wantStyle} className="single-game-icon" />
+                    </div>
                     <div onClick={this.setPlayed}>
                         <Played style={playedStyle} className="single-game-icon"  />
                     </div>

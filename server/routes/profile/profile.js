@@ -64,7 +64,6 @@ ProfileRoutes.post('/likes', async (req, res) => {
                     const storeGameData = Object.keys(gameCheck.games[gameIndex]);
                     const numberOfEntries = storeGameData.length; //reuse the original query's data but subtract one since we just deleted it
                   
-
                     if (numberOfEntries <= 2){
 
                         await Profile.updateOne(
@@ -127,16 +126,10 @@ ProfileRoutes.post('/played', async (req, res) => {
                         {"username": sessionUser, "games.game_id":game.id},
                         {$set:{'games.$.played': played}}
                     )
-
-                    //check the number of fields left. If there is only the Id, delete the game entry.
-                    const gameIndex = gameCheck.games.findIndex(e => e.game_id === game.id) ;
-                    const storeGameData = Object.keys(gameCheck.games[gameIndex]);
-                    const numberOfEntries = storeGameData.length; //reuse the original query's data but subtract one since we just deleted it
-    
-
                     const game_response = {game_id: game.id, played: played}
                     res.send(game_response);
-                //if no game exists already create new entry
+
+                 //delete field if false   
                 }else if (gameCheck && played === false){
 
                    //check the number of fields left. If there is only the Id, delete the game entry.
@@ -144,7 +137,7 @@ ProfileRoutes.post('/played', async (req, res) => {
                     const storeGameData = Object.keys(gameCheck.games[gameIndex]);
                     const numberOfEntries = storeGameData.length; //reuse the original query's data but subtract one since we just deleted it
                   
-                    //delete
+                    //delete game entry if only id
                     if (numberOfEntries <= 2){
 
                         await Profile.updateOne(
@@ -154,8 +147,8 @@ ProfileRoutes.post('/played', async (req, res) => {
 
                         const game_response = {game_id: game.id, likes: false}
                         res.send(game_response);
-                        
-                    //update
+
+                    //remove field only if more fields exist
                     }else{
                         
                         await Profile.updateOne(
@@ -167,8 +160,6 @@ ProfileRoutes.post('/played', async (req, res) => {
                         res.send(game_response);
 
                     }
-
-
 
                  //if no game exists already create new entry
                 }else{
@@ -191,5 +182,84 @@ ProfileRoutes.post('/played', async (req, res) => {
     }
 });
 
+ProfileRoutes.post('/want', async (req, res) => {
+    try {
+        const game = req.body;
+        if(game){
+            //search for user profile
+            const sessionUser =  req.session.user.username;
+            const profile = await Profile.findOne({username: sessionUser});
+            const want = game.want;
+            if (profile){
+                //check for existing game entry
+                const gameCheck = await Profile.findOne({username: sessionUser, "games.game_id":game.id});
+
+                // update field in object only
+                if (gameCheck && want === true){
+                    await Profile.updateOne(
+                        {"username": sessionUser, "games.game_id":game.id},
+                        {$set:{'games.$.want': want}}
+                    )
+
+                    //check the number of fields left. If there is only the Id, delete the game entry.
+                    const gameIndex = gameCheck.games.findIndex(e => e.game_id === game.id) ;
+                    const storeGameData = Object.keys(gameCheck.games[gameIndex]);
+                    const numberOfEntries = storeGameData.length; //reuse the original query's data but subtract one since we just deleted it
+
+                    const game_response = {game_id: game.id, want: want}
+                    res.send(game_response);
+
+                 //delete field if false   
+                }else if (gameCheck && want === false){
+
+                   //check the number of fields left. If there is only the Id, delete the game entry.
+                    const gameIndex = gameCheck.games.findIndex(e => e.game_id === game.id) ;
+                    const storeGameData = Object.keys(gameCheck.games[gameIndex]);
+                    const numberOfEntries = storeGameData.length; //reuse the original query's data but subtract one since we just deleted it
+                  
+                    //delete game if only id
+                    if (numberOfEntries <= 2){
+
+                        await Profile.updateOne(
+                            {"username": sessionUser, "games.game_id":game.id},
+                            {$pull:{'games':{'game_id':game.id}}}
+                        )
+
+                        const game_response = {game_id: game.id, likes: false}
+                        res.send(game_response);
+
+                    //update if more fields exist
+                    }else{
+                        
+                        await Profile.updateOne(
+                            {"username": sessionUser, "games.game_id":game.id},
+                            {$unset:{'games.$.want': false}}
+                        )
+
+                        const game_response = {game_id: game.id, likes: false}
+                        res.send(game_response);
+
+                    }
+
+                 //if no game exists already create new entry
+                }else{
+                    await Profile.updateOne(
+                        {"username": sessionUser},
+                        {
+                            $push:{'games': {
+                                    "game_id": game.id,
+                                    "want" : want
+                            }}
+                        }
+                    )
+                    const game_response = {game_id: game.id, want: want}
+                    res.send(game_response);
+                }
+            }
+        }
+    } catch (err) {
+        res.status(400).send(parseError(err));
+    }
+});
 
 export default ProfileRoutes;

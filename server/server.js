@@ -1,7 +1,13 @@
 import express from 'express';
 require('dotenv').config()
 import mongoose from 'mongoose';
-import { userRoutes, sessionRoutes, PopularRoutes, SingleGameRoutes, ProfileRoutes } from './routes/index';
+import { 
+    userRoutes,
+    sessionRoutes,
+    PopularRoutes,
+    SingleGameRoutes,
+    ProfileRoutes,
+    SearchRoutes}from './routes/index';
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
@@ -43,6 +49,7 @@ const MongoStore = require('connect-mongo')(session);
         apiRouter.use('/popular', PopularRoutes);
         apiRouter.use('/game', SingleGameRoutes);
         apiRouter.use('/profile', ProfileRoutes);
+        apiRouter.use('/search', SearchRoutes);
 
         app.listen(port, () => console.log(`Listening on port ${port}!`));
     } catch (err) {

@@ -9,6 +9,8 @@ import GameModes from './game-data/GameModes'
 import Genres from './game-data/Genres'
 import Companies from './game-data/Companies'
 
+import MediumThumb from 'components/thumbnails/MediumThumb';
+
  const mapStateToProps = ({ session, games }) => ({
     session, games
 })
@@ -30,6 +32,13 @@ class Single extends React.Component {
         const gameId = this.props.location.state.gameId;
         this.getGame(gameId);
         
+    }
+
+    componentDidUpdate(prevProps){
+        if (this.props.location.state.gameId !== prevProps.location.state.gameId){
+            const gameId = this.props.location.state.gameId;
+            this.getGame(gameId);
+        }
     }
     findGameInStore = () => {
         const game = this.state.gameResult[0];
@@ -95,11 +104,12 @@ class Single extends React.Component {
                 <div className="container">
                     {/* <div id="header-banner" style={{backgroundImage: `url(https://images.igdb.com/igdb/image/upload/t_cover_un iform/${game.cover.image_id}.jpg)`}} > */}
                     <div className="game-summary">
-                        <img 
+
+                        <MediumThumb 
                             src={`https://images.igdb.com/igdb/image/upload/t_cover_uniform/${game.cover.image_id}.jpg`}
                             alt={game.name}
                         />
-                       
+
                         <Ratings 
                         
                             id={game.id}

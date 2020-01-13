@@ -4,9 +4,11 @@ import Login from './Login';
 import Signup from './Signup';
 import Dashboard from './Dashboard';
 import Topnav from './Topnav';
+import { createBrowserHistory } from "history";
+
 import { connect } from 'react-redux';
 import { Route, Redirect } from  "react-router-dom";
-import { loadGames } from '../actions/profile';
+import { loadGames } from 'actions/profile/games';
 
 import {
   AuthRoute, 
@@ -24,13 +26,13 @@ const mapDispatchToProps = dispatch => ({
     loadGames: () => dispatch(loadGames())
 });
 
+const customHistory = createBrowserHistory();
+
 class App extends React.Component{
 componentDidMount = () => this.props.loadGames();
 
 componentDidUpdate(prevProps){
-  console.log('componentApp updated');
   if (this.props.session.userId !== prevProps.session.userId){
-    console.log('componentApp userId diff: '+this.props.session.userId);
     return this.props.loadGames();
   }
 }
@@ -39,7 +41,7 @@ componentDidUpdate(prevProps){
     
     return (
       <div className="container">
-        <Topnav session={this.props.session}/>
+        <Topnav history={customHistory} session={this.props.session}/>
         <Route exact path="/"> 
           {user ? <Redirect to="/dashboard" /> : <Welcome /> }
         </Route>

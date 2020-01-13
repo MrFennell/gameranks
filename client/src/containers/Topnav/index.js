@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { logout } from 'actions/session';
 import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
+import Search from './Search'
 
 const mapStateToProps = ({ session, games }) => ({
     session,
@@ -24,7 +25,9 @@ class Topnav extends React.Component{
                         <Navbar.Brand>Gameranks</Navbar.Brand>
                         <Link to='/dashboard'>{user}</Link>
                         <Link to='/games'>Games</Link>
+                        <Search history={this.props.history} />
                         <button onClick={this.props.logout}>Logout</button>
+                        
                     </Navbar>
                 </div>
             )
@@ -37,6 +40,7 @@ class Topnav extends React.Component{
                         <Link to='/login'>Login</Link>
                         <Link to='/signup'>Signup</Link>
                         <Link to='/games'>Games</Link>
+                        <Search history={this.props.history} />
                     </Navbar>
                 </div>
             )

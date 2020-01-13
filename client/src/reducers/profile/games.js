@@ -1,8 +1,9 @@
 import {
     LOAD_PROFILE_GAMES,
     UPDATE_PROFILE_GAME_LIKE,
-    UPDATE_PROFILE_GAME_PLAYED
-} from 'actions/profile';
+    UPDATE_PROFILE_GAME_PLAYED,
+    UPDATE_PROFILE_GAME_WANT
+} from 'actions/profile/games';
 
 export default (state = [], {type, games}) => {
     Object.freeze(state);
@@ -39,6 +40,26 @@ export default (state = [], {type, games}) => {
                     return {
                         ...item,
                         played: played
+                    }
+                }
+                    return item
+                });
+            }else{
+                return [
+                    ...state,
+                    games
+                ]
+            }
+        case UPDATE_PROFILE_GAME_WANT:
+            //update state array where game.like changed
+            const want = games.want;
+            const wantFound = state.find(x => x.game_id === games.game_id);
+            if (wantFound){
+                return state.map((item, index) => {
+                if(item.game_id === games.game_id){
+                    return {
+                        ...item,
+                        want: want
                     }
                 }
                     return item
