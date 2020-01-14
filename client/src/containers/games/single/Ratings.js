@@ -41,6 +41,11 @@ class Ratings extends Component {
     }
     
     componentDidMount = () => this.searchGame();
+    componentDidUpdate(prevProps){
+        if (this.props.id !== prevProps.id){
+            this.searchGame();
+        }
+    }
     searchGame = () => {
         const game = this.props.id;
         const gameResult = this.props.games.find(e => e.game_id === game);
@@ -53,6 +58,13 @@ class Ratings extends Component {
                     played: (gameResult.played ? gameResult.played : false),
                     want: (gameResult.want ? gameResult.want : false),
                 });
+        }else{
+            this.setState({
+                likes:false,
+                owned: false,
+                played: false,
+                want: false
+            })
         }
     }
     

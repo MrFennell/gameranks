@@ -47,7 +47,7 @@ class PopularGames extends Component {
                 )
         }else {
             return (
-                <>
+                <div className="container">
                     <h3>Popular Games</h3>
                     {games.map(game => (
                         <div key={game.id}>
@@ -67,7 +67,7 @@ class PopularGames extends Component {
                             </Link>
                         </div>
                     ))}
-                </>
+                </div>
             );
         }
     }

@@ -24,8 +24,7 @@ class Single extends React.Component {
             errors: null,
             isLoaded: false,
             inUserMemory: false,
-            likes: false,
-            owned: false
+            coverImage: ''
         }
     }
     componentDidMount(props){
@@ -40,19 +39,20 @@ class Single extends React.Component {
             this.getGame(gameId);
         }
     }
-    findGameInStore = () => {
-        const game = this.state.gameResult[0];
-        console.log(game)
-        const findGame = this.props.games.find(e => e.game_id === game.id);
-        if (findGame){
-            this.setState
-                ({
-                    inUserMemory: true,
-                    likes: (findGame.likes ? findGame.likes : false),
-                    owned:(findGame.owned ? findGame.owned : false)
-                });
-        }
-    }
+    // findGameInStore = () => {
+    //     const game = this.state.gameResult[0];
+       
+    //     const findGame = this.props.games.find(e => e.game_id === game.id);
+    //     if (findGame){
+            
+    //         this.setState
+    //             ({
+    //                 inUserMemory: true,
+    //                 likes: (findGame.likes ? findGame.likes : false),
+    //                 owned:(findGame.owned ? findGame.owned : false)
+    //             });
+    //     }
+    // }
     //get game from api
     async getGame(gameId){
         await fetch('/api/game',{
@@ -63,6 +63,8 @@ class Single extends React.Component {
         .then(res => res.json())
             .then (
                 (result) => {
+                    this.checkForCover(result); //check for cover url to avoid errors
+
                     this.setState({
                         isLoaded: true,
                         gameResult: result,
@@ -76,20 +78,29 @@ class Single extends React.Component {
                     });
                 }
             )
-        .then(
-            this.findGameInStore
-        )
+        // .then(
+        //     this.findGameInStore
+        // )
     }
-    //check if game is in user store
-    async CheckStore(){
+    checkForCover(result){
+        const game = result[0];
 
+        if (game.cover !== undefined){
+            this.setState({
+                coverImage: 'https://images.igdb.com/igdb/image/upload/t_cover_uniform/'+game.cover.image_id+'.jpg'
+            })
+
+        }else{
+            this.setState({
+                coverImage: `https://images.igdb.com/igdb/image/upload/t_cover_uniform/co1l49.jpg`
+            })
+        }
     }
-
     render(){
         
         const {errors, isLoaded} = this.state;
         const game = this.state.gameResult[0];
-        
+
         if (errors){
             return <div>Error: {errors}</div>;
         }else if (!isLoaded){
@@ -99,23 +110,20 @@ class Single extends React.Component {
                     </>
                 )
         }else {
+            
             return (
                 
                 <div className="container">
-                    {/* <div id="header-banner" style={{backgroundImage: `url(https://images.igdb.com/igdb/image/upload/t_cover_un iform/${game.cover.image_id}.jpg)`}} > */}
                     <div className="game-summary">
 
                         <MediumThumb 
-                            src={`https://images.igdb.com/igdb/image/upload/t_cover_uniform/${game.cover.image_id}.jpg`}
+                            src={this.state.coverImage}
                             alt={game.name}
                         />
 
                         <Ratings 
-                        
                             id={game.id}
-                        
                         />
-                         
                         <h3>{game.name}</h3>
                         <p>{game.summary}</p>
                         
