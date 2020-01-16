@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { logout } from 'actions/session';
-import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap'
 
 import Search from './Search'
@@ -28,7 +27,7 @@ class Topnav extends React.Component{
             return(
                 <div className="container">
                     <Navbar expand="md">
-                        <Navbar.Brand><Link Link to='/dashboard'>Gameranks</Link></Navbar.Brand>
+                        <LinkContainer to='/dashboard'><Navbar.Brand>Gameranks</Navbar.Brand></LinkContainer>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="mr-auto">

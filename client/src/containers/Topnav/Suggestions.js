@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 // }
 
 const Suggestions = (props) => {
+    
     const options = props.results.map(game => (
         <div key={game.id}>
             <Link to={{

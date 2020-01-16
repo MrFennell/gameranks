@@ -15,7 +15,7 @@ SearchRoutes.post('', async (req, res) => {
                 'Accept': 'application/json',
                 'user-key': GAME_API
             },
-                data:'fields name, slug, popularity; where name ~ '+'"'+query+'"'+'*; sort popularity desc; limit 20;'
+                data:'fields name, slug, popularity, cover.image_id, release_dates.y, release_dates.m; where name ~ '+'"'+query+'"'+'*; sort popularity desc; limit 20;'
             })
         if (games) {
             res.json(games.data);
@@ -46,6 +46,5 @@ SearchRoutes.post('/gameSuggestions', async (req, res) => {
         res.json(error)
     }
 });
-
 
 export default SearchRoutes;

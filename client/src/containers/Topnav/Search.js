@@ -9,7 +9,7 @@ class Search extends Component {
     constructor(props) {
         super(props);
         
-        this.getData = debounce(this.getData, 200);
+        // this.getData = debounce(this.getData, 200);
         
         this.state = {
             query: '',
@@ -62,10 +62,10 @@ class Search extends Component {
                         displayResults: false
                     });
             }
-            })
-        }
-    handleSubmit = () => {
+        })
+    }
         
+    handleSubmit = () => {
         this.setState({
             query: this.search.value,
             displayResults: false
@@ -75,8 +75,6 @@ class Search extends Component {
             pathname:'/games/search/:query',
             search: "?game="+this.state.query
         })
-        
-        
     }
     closeSuggestions = () => {
         this.setState({displayResults: false});
