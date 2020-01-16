@@ -12,7 +12,7 @@ const Suggestions = (props) => {
     const options = props.results.map(game => (
         <div key={game.id}>
             <Link to={{
-                pathname:"/games/" + game.slug,
+                pathname:"/games/game/" + game.slug,
                 state: {
                     gameId: game.id,
                     gameName: game.name

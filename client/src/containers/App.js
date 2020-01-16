@@ -4,6 +4,7 @@ import Login from './Login';
 import Signup from './Signup';
 import Dashboard from './Dashboard';
 import Topnav from './Topnav';
+import Results from './search/Results';
 import { createBrowserHistory } from "history";
 
 import { connect } from 'react-redux';
@@ -45,7 +46,8 @@ componentDidUpdate(prevProps){
         <Route exact path="/"> 
           {user ? <Redirect to="/dashboard" /> : <Welcome /> }
         </Route>
-        <Route path="/games/:gameName" component={Single} />
+        <Route path="/games/game/:gameName" component={Single} />
+        <Route path="/games/search/:query" component={Results} />
         <Route exact path="/games" component={Games} />
         <AuthRoute path="/login" component={Login} />
         <AuthRoute path="/signup" component={Signup} />

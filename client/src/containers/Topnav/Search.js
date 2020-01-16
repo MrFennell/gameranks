@@ -10,6 +10,7 @@ class Search extends Component {
         super(props);
         
         this.getData = debounce(this.getData, 200);
+        
         this.state = {
             query: '',
             results: [],
@@ -19,13 +20,13 @@ class Search extends Component {
         }
     }
     componentDidUpdate(prevProps){
-        if (this.props.location.pathname !== prevProps.location.pathname){
+        if (this.props.location !== prevProps.location){
             this.setState({displayResults: false});
             this.search.value = '';
         }
     }
     async getData(){
-        await fetch('/api/search',{
+        await fetch('/api/search/gameSuggestions',{
             method:"POST",
             body: JSON.stringify({query: this.state.query}),
             headers: {
@@ -64,10 +65,18 @@ class Search extends Component {
             })
         }
     handleSubmit = () => {
-        this.props.history.push({
-            pathname:'/games',
-            state: {results:this.state.results}
+        
+        this.setState({
+            query: this.search.value,
+            displayResults: false
         })
+        this.search.value = '';
+        this.props.history.push({
+            pathname:'/games/search/:query',
+            search: "?game="+this.state.query
+        })
+        
+        
     }
     closeSuggestions = () => {
         this.setState({displayResults: false});
@@ -76,7 +85,7 @@ class Search extends Component {
     render() {
         if(this.state.displayResults === false){
             return (
-            <Form.Group>
+            <Form.Group onSubmit={this.handleSubmit}>
                 <Form.Control 
                     placeholder="Search games..."
                     ref={input => this.search = input}
@@ -88,7 +97,7 @@ class Search extends Component {
         );
         }
          return (
-            <Form.Group>
+            <Form.Group onSubmit={this.handleSubmit}>
                 <Form.Control 
                     placeholder="Search games..."
                     ref={input => this.search = input}

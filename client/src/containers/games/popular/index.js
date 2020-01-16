@@ -56,7 +56,7 @@ class PopularGames extends Component {
                                 alt={game.name}
                              />
                             <Link to={{
-                                pathname:"/games/" + game.slug,
+                                pathname:"/games/game/" + game.slug,
                                 state: {
                                     gameId: game.id,
                                     gameName: game.name
