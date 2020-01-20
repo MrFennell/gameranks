@@ -1,6 +1,7 @@
 import React from 'react';
 
 const MediumThumb = (props) => {
+    
     return (
         <div>
             <img

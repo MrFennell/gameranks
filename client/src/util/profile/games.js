@@ -17,8 +17,19 @@ export const updateLike = game => (
         }
     })
 );
+
 export const updatePlayed = game => (
     fetch("/api/profile/played", {
+        method: "POST",
+        body: JSON.stringify(game),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+);
+
+export const updateOwned = game => (
+    fetch("/api/profile/owned", {
         method: "POST",
         body: JSON.stringify(game),
         headers: {
@@ -37,4 +48,13 @@ export const updateWant = game => (
     })
 );
 
+export const fetchCovers = games => (
+    fetch("/api/profile/want", {
+        method: "POST",
+        body: JSON.stringify(games),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+);
 

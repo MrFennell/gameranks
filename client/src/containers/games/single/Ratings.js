@@ -3,18 +3,30 @@ import React, { Component } from 'react';
 import Want from 'components/icons/Want';
 import { connect } from 'react-redux';
 import { 
-    addLike, 
-    removeLike, 
     addPlayed,
     removePlayed,
-    addWant,
-    removeWant
+
     }from 'actions/profile/games';
+import { 
+    addLike, 
+    removeLike,
+    }from 'actions/profile/likes';
+
+import { 
+    addOwned, 
+    removeOwned,
+    }from 'actions/profile/owned';
+
+import { 
+    addWant, 
+    removeWant,
+    }from 'actions/profile/want';
+
 import Played from 'components/icons/Played';
 import Like from 'components/icons/Like';
 
- const mapStateToProps = ({ session, games }) => ({
-    session, games
+ const mapStateToProps = ({ session, games, likes, owned, want }) => ({
+    session, games, likes, owned, want
 });
 
 const mapDispatchToProps = (dispatch, ownProps)=> ({
@@ -23,7 +35,9 @@ const mapDispatchToProps = (dispatch, ownProps)=> ({
     addPlayed: () => dispatch(addPlayed(ownProps)),
     removePlayed: () => dispatch(removePlayed(ownProps)),
     addWant: () => dispatch(addWant(ownProps)),
-    removeWant: () => dispatch(removeWant(ownProps))
+    removeWant: () => dispatch(removeWant(ownProps)),
+    addOwned: () => dispatch(addOwned(ownProps)),
+    removeOwned: () => dispatch(removeOwned(ownProps))
 });
 
 class Ratings extends Component {
@@ -32,7 +46,6 @@ class Ratings extends Component {
       
         this.state = {
             game: this.props.id,
-            inMemory: false,
             likes:false,
             owned: false,
             played: false,
@@ -48,24 +61,15 @@ class Ratings extends Component {
     }
     searchGame = () => {
         const game = this.props.id;
-        const gameResult = this.props.games.find(e => e.game_id === game);
-        if (gameResult){
-            this.setState
-                ({
-                    inMemory: true,
-                    likes: (gameResult.likes ? gameResult.likes : false),
-                    owned:(gameResult.owned ? gameResult.owned : false),
-                    played: (gameResult.played ? gameResult.played : false),
-                    want: (gameResult.want ? gameResult.want : false),
-                });
-        }else{
-            this.setState({
-                likes:false,
-                owned: false,
-                played: false,
-                want: false
-            })
-        }
+        const likesResult = this.props.likes.find(e => e.game_id === game);
+        const ownedResult = this.props.owned.find(e => e.game_id === game);
+        const wantResult = this.props.want.find(e => e.game_id === game);
+        if (likesResult)
+            {this.setState({likes: true});}
+        if (ownedResult)
+            {this.setState({owned: true});}
+        if (wantResult)
+            {this.setState({want: true});}  
     }
     
     
@@ -79,16 +83,26 @@ class Ratings extends Component {
             this.props.addLike()
         }
     }
-    setPlayed = () => {
-        if (this.state.played === true){
-            this.setState({played: false})
-            this.props.removePlayed()
+    setOwned= () => {
+        if (this.state.owned === true){
+            this.setState({owned: false})
+            this.props.removeOwned()
         }
         else{
-            this.setState({played: true})
-            this.props.addPlayed()
+            this.setState({owned: true})
+            this.props.addOwned()
         }
     }
+    // setPlayed = () => {
+    //     if (this.state.played === true){
+    //         this.setState({played: false})
+    //         this.props.removePlayed()
+    //     }
+    //     else{
+    //         this.setState({played: true})
+    //         this.props.addPlayed()
+    //     }
+    // }
     setWant = () => {
         if (this.state.want === true){
             this.setState({want: false})
@@ -108,7 +122,8 @@ class Ratings extends Component {
             color: 'black',
         }
         const likeStyle = ((this.state.likes === true) ? iconTrue : iconFalse)
-        const playedStyle = ((this.state.played === true) ? iconTrue : iconFalse)
+        // const playedStyle = ((this.state.played === true) ? iconTrue : iconFalse)
+        const ownedStyle = ((this.state.owned === true) ? iconTrue : iconFalse)
         const wantStyle = ((this.state.want === true) ? iconTrue : iconFalse)
         if (this.props.session.userId){
             return (
@@ -116,8 +131,8 @@ class Ratings extends Component {
                     <div onClick={this.setWant}>
                        <Want style={wantStyle} className="single-game-icon" />
                     </div>
-                    <div onClick={this.setPlayed}>
-                        <Played style={playedStyle} className="single-game-icon"  />
+                    <div onClick={this.setOwned}>
+                        <Played style={ownedStyle} className="single-game-icon"  />
                     </div>
                     <div onClick={this.setLike}>
                         <Like style={likeStyle} className="single-game-icon"/>

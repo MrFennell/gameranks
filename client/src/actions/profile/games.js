@@ -35,10 +35,8 @@ export const loadGames = games => async dispatch => {
         return dispatch(receiveErrors(data));
 }
 
-
 export const addLike = game => async dispatch => {
     game.likes = true;
-    game.case = 'likes';
     const response = await apiUtil.updateLike(game);
     const data = await response.json();
     if (response.ok) {

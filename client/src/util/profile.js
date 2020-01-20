@@ -1,3 +1,12 @@
+export const loadProfile = () => (
+    fetch("/api/profile/loadProfile", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+);
+
 export const loadGames = games => (
     fetch("/api/profile/loadGames", {
         method: "GET",

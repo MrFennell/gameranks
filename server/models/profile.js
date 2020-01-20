@@ -7,6 +7,18 @@ const ProfileSchema = new mongoose.Schema({
     games: {
         type: Array,
     },
+    played: {
+        type: Array,
+    },
+    wishlist: {
+        type: Array,
+    },
+    likes: {
+        type: Array,
+    },
+    owned: {
+        type: Array,
+    },
 
 }, {timestamps: true});
 

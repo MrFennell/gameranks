@@ -9,7 +9,8 @@ import { createBrowserHistory } from "history";
 
 import { connect } from 'react-redux';
 import { Route, Redirect } from  "react-router-dom";
-import { loadGames } from 'actions/profile/games';
+import { loadProfile } from 'actions/profile/profile';
+
 
 import {
   AuthRoute, 
@@ -24,14 +25,16 @@ const mapStateToProps = ({ session }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    loadGames: () => dispatch(loadGames())
+    loadProfile: () => dispatch(loadProfile())
 });
 
 const customHistory = createBrowserHistory();
 
 class App extends React.Component{
-componentDidMount = () => this.props.loadGames();
-
+// componentDidMount = () => this.props.loadGames();
+componentDidMount(){
+  this.props.loadProfile();
+}
 componentDidUpdate(prevProps){
   if (this.props.session.userId !== prevProps.session.userId){
     return this.props.loadGames();

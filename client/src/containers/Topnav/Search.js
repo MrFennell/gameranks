@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Suggestions from './Suggestions';
-import debounce from 'lodash/debounce';
 import {withRouter} from 'react-router-dom'
 import Form  from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -24,6 +23,10 @@ class Search extends Component {
             this.setState({displayResults: false});
             this.search.value = '';
         }
+        if (this.props.location !== prevProps.location){
+            this.setState({displayResults: false});
+            this.search.value = '';
+        }
     }
     async getData(){
         await fetch('/api/search/gameSuggestions',{
@@ -35,18 +38,18 @@ class Search extends Component {
         })
         .then(res => res.json())
         .then (
-                (result) => {
-                    this.setState({
-                        results: result,
-                        displayResults: true
-                    });
-                },
-                (errors) => {
-                    this.setState({
-                        errors,
-                        displayResults: false
-                    });
-                }
+            (result) => {
+                this.setState({
+                    results: result,
+                    displayResults: true
+                });
+            },
+            (errors) => {
+                this.setState({
+                    errors,
+                    displayResults: false
+                });
+            }
         )
     }
 
@@ -58,9 +61,9 @@ class Search extends Component {
                 this.getData()
             }else{
                 this.setState({
-                        results: [],
-                        displayResults: false
-                    });
+                    results: [],
+                    displayResults: false
+                });
             }
         })
     }
