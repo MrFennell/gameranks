@@ -1,6 +1,41 @@
 h1, h2, h3, p, a {
   font-family: 'Roboto', sans-serif; }
 
+.small-card {
+  width: fit-content;
+  float: left; }
+  .small-card .small-card-title {
+    margin: 0;
+    padding: 0; }
+  .small-card .image-container {
+    position: relative;
+    width: fit-content; }
+    .small-card .image-container img {
+      border-radius: 8px;
+      width: 150px; }
+    .small-card .image-container .imageOverlay {
+      width: 150px; }
+    .small-card .image-container .dimmed {
+      opacity: .4;
+      transition: opacity .3s; }
+    .small-card .image-container .hidden {
+      display: none; }
+    .small-card .image-container .input-overlay .small-card-title {
+      position: absolute;
+      top: 20px;
+      text-align: center;
+      width: 100%; }
+    .small-card .image-container .input-overlay .buttons {
+      position: absolute;
+      bottom: 10px;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-evenly;
+      margin: auto; }
+      .small-card .image-container .input-overlay .buttons svg {
+        font-size: 30px; }
+
 .thumbnail-medium {
   border-radius: 8px; }
 

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CardSmall from "containers/cards/CardSmall";
 
-const mapStateToProps = ({likes}) => ({likes});
+const mapStateToProps = ({owned}) => ({owned});
 
 class Collection extends Component {
-    _isMounted = false;
+     _isMounted = false;
 
     constructor(props) {
         super(props);
@@ -18,7 +18,7 @@ class Collection extends Component {
     }
     componentDidMount(props){
         this._isMounted = true;
-        const games = this.props.likes;
+        const games = this.props.owned;
         if (games !== []){
             this.getCovers(games);
         }
@@ -27,10 +27,9 @@ class Collection extends Component {
     componentWillUnmount() {
         this._isMounted = false;
     }
-
     componentDidUpdate(prevProps){
-        if (this.props.likes !== prevProps.likes){
-            this.getCovers(this.props.likes);
+        if (this.props.owned !== prevProps.owned){
+            this.getCovers(this.props.owned);
         }
     }
     async getCovers(games){
@@ -75,12 +74,12 @@ class Collection extends Component {
                         src={e.cover ?
                             `https://images.igdb.com/igdb/image/upload/t_cover_uniform/${e.cover.image_id}.jpg` 
                             : `https://images.igdb.com/igdb/image/upload/t_cover_uniform/co1l49.jpg`}
-                        />
-                    ))}
-                </div>
+                    />
+               ))}
+            </div>
         )
 
-        }else return <div class='no-results'>Like some games to add them to this page!</div>
+        }else return <div>no result</div>
         
     }
 }

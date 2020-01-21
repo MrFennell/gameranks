@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
-import Wishlist from 'containers/profile/Wishlist';
+import Nav from 'react-bootstrap/Nav';
+import { LinkContainer } from 'react-router-bootstrap'
 
 const mapStateToProps = ({ session, want }) => ({
     session, want
@@ -13,8 +14,13 @@ class Dashboard extends Component {
         return (
             <>
                 <Container>
+
                     <h3>Welcome back {this.props.session.username}</h3>
-                    <Wishlist wishlist={this.props.want}/>
+                    <Nav variant="tabs">
+                        <LinkContainer to='/dashboard/collection'><Nav.Link>Collection</Nav.Link></LinkContainer>
+                        <LinkContainer to='/dashboard/wishlist'><Nav.Link>Wishlist</Nav.Link></LinkContainer>
+                        <LinkContainer to='/dashboard/likes'><Nav.Link>Likes</Nav.Link></LinkContainer>
+                    </Nav>
                 </Container>   
             </>
         );

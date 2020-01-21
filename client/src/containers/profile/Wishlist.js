@@ -4,6 +4,8 @@ import CardSmall from "containers/cards/CardSmall";
 const mapStateToProps = ({want}) => ({want});
 
 class Wishlist extends Component {
+    _isMounted = false;
+
     constructor(props) {
         super(props);
         
@@ -14,20 +16,25 @@ class Wishlist extends Component {
         }
     }
     componentDidMount(props){
-        
-        const games = this.props.wishlist;
+        this._isMounted = true;
+        const games = this.props.want;
         if (games !== []){
             this.getCovers(games);
         }
-        
     }
 
     componentDidUpdate(prevProps){
-        if (this.props.wishlist !== prevProps.wishlist){
-            this.getCovers(this.props.wishlist);
+        if (this.props.want !== prevProps.want){
+            this.getCovers(this.props.want);
         }
     }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+  
     async getCovers(games){
+            
             
             await fetch('/api/search/covers',{
                 method:"POST",
@@ -37,9 +44,11 @@ class Wishlist extends Component {
             .then(res => res.json())
                 .then (
                     (result) => {
-                        this.setState({
-                            gameResults: result,
-                        });
+                        if (this._isMounted){
+                            this.setState({
+                                gameResults: result,
+                            });
+                        }
                     },
                     (errors) => {
                         this.setState({
@@ -55,13 +64,14 @@ class Wishlist extends Component {
         if(gameArray !== []){
 
             return (
-                <div className="top">
+                <div className="container">
 
                 {gameArray.map ((e, index) => (
 
                     <CardSmall 
                         key={index}
                         id={e.id}
+                        slug={e.slug}
                         name={e.name}
                         src={e.cover ?
                             `https://images.igdb.com/igdb/image/upload/t_cover_uniform/${e.cover.image_id}.jpg` 

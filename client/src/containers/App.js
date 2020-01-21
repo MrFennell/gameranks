@@ -11,7 +11,6 @@ import { connect } from 'react-redux';
 import { Route, Redirect } from  "react-router-dom";
 import { loadProfile } from 'actions/profile/profile';
 
-
 import {
   AuthRoute, 
   ProtectedRoute 
@@ -19,6 +18,9 @@ import {
 
 import Single from "./games/single";
 import Games from "./games";
+import Wishlist from "./profile/Wishlist";
+import Collection from "./profile/Collection";
+import Likes from "./profile/Likes";
 
 const mapStateToProps = ({ session }) => ({
     session
@@ -31,10 +33,11 @@ const mapDispatchToProps = dispatch => ({
 const customHistory = createBrowserHistory();
 
 class App extends React.Component{
-// componentDidMount = () => this.props.loadGames();
+
 componentDidMount(){
   this.props.loadProfile();
 }
+
 componentDidUpdate(prevProps){
   if (this.props.session.userId !== prevProps.session.userId){
     return this.props.loadGames();
@@ -54,8 +57,10 @@ componentDidUpdate(prevProps){
         <Route exact path="/games" component={Games} />
         <AuthRoute path="/login" component={Login} />
         <AuthRoute path="/signup" component={Signup} />
-        <ProtectedRoute path="/dashboard" component={Dashboard} />
-        
+        <ProtectedRoute  path="/dashboard" component={Dashboard} />
+        <ProtectedRoute  path="/dashboard/wishlist" component={Wishlist} />
+        <ProtectedRoute  path="/dashboard/collection" component={Collection} />
+        <ProtectedRoute  path="/dashboard/likes" component={Likes} />
       </div>
     )
   }
