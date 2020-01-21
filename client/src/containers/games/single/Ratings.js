@@ -25,7 +25,7 @@ import {
 import Played from 'components/icons/Played';
 import Like from 'components/icons/Like';
 
- const mapStateToProps = ({ session, games, likes, owned, want }) => ({
+const mapStateToProps = ({ session, games, likes, owned, want }) => ({
     session, games, likes, owned, want
 });
 

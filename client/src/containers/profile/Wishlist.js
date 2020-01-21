@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import CardSmall from "containers/cards/CardSmall";
 const mapStateToProps = ({want}) => ({want});
 
 class Wishlist extends Component {
@@ -55,18 +55,19 @@ class Wishlist extends Component {
         if(gameArray !== []){
 
             return (
-            <div className="top">
+                <div className="top">
+
                 {gameArray.map ((e, index) => (
-                    <div key={index}>
-                        <p>{e.name}</p>
-                        <img src={
-                            e.cover ?
-                            `https://images.igdb.com/igdb/image/upload/t_cover_uniform/${e.cover.image_id}.jpg` : 
-                            `https://images.igdb.com/igdb/image/upload/t_cover_uniform/co1l49.jpg`} 
-                            alt= {e.name}
-                        />
-                    </div>
-                ))}
+
+                    <CardSmall 
+                        key={index}
+                        id={e.id}
+                        name={e.name}
+                        src={e.cover ?
+                            `https://images.igdb.com/igdb/image/upload/t_cover_uniform/${e.cover.image_id}.jpg` 
+                            : `https://images.igdb.com/igdb/image/upload/t_cover_uniform/co1l49.jpg`}
+                    />
+               ))}
             </div>
         )
 

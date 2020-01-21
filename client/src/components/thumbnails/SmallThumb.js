@@ -1,9 +1,9 @@
 import React from 'react';
 
-const SmallThumb = () => {
+const SmallThumb = (props) => {
     return (
             <img
-                className = "thumbnail-small"
+                className="thumbnail-small"
                 src={props.src}
                 alt={props.alt}
             />
