@@ -32,7 +32,6 @@ export const loadProfile = profile => async dispatch => {
         const response = await apiUtil.loadProfile(profile);
         const data = await response.json();
         if (response.ok) {
-            console.log(data.owned)
             return Promise.all([
                 dispatch(loadUserProfile(data)), 
                 dispatch(loadUserLikes(data.likes)),

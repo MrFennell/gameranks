@@ -48,28 +48,32 @@ SearchRoutes.post('/gameSuggestions', async (req, res) => {
 
 SearchRoutes.post('/covers', async (req, res) => {
     const covers = req.body.games;
+    if (covers !== []){
+    
+        const queryToString = covers.map(function(item){
+            return item['game_id'];
+        })
+        
+        try {
+            const games = await axios({
+                method: 'post',
+                url: 'https://api-v3.igdb.com/games',
+                headers: {
+                    'Accept': 'application/json',
+                    'user-key': GAME_API
+                },
+                    data:'fields name, slug, cover.image_id; where id = ('+queryToString+');'
+                })
 
-    const queryToString = covers.map(function(item){
-        return item['game_id'];
-    })
+            if (games) {
+                res.json(games.data);
+            }
 
-    try {
-        const games = await axios({
-            method: 'post',
-            url: 'https://api-v3.igdb.com/games',
-            headers: {
-                'Accept': 'application/json',
-                'user-key': GAME_API
-            },
-                data:'fields name, slug, cover.image_id; where id = ('+queryToString+');'
-            })
-
-        if (games) {
-            res.json(games.data);
+        } catch (error) {
+            res.json(error)
         }
-
-    } catch (error) {
-        res.json(error)
+    }else{
+        res.send([]);
     }
 });
 

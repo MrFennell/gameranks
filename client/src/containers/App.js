@@ -40,7 +40,7 @@ componentDidMount(){
 
 componentDidUpdate(prevProps){
   if (this.props.session.userId !== prevProps.session.userId){
-    return this.props.loadGames();
+      this.props.loadProfile();
   }
 }
   render(){
@@ -50,17 +50,19 @@ componentDidUpdate(prevProps){
       <div className="container">
         <Topnav history={customHistory} session={this.props.session}/>
         <Route exact path="/"> 
-          {user ? <Redirect to="/dashboard" /> : <Welcome /> }
+          {user ? <Redirect to="/dashboard/collection" /> : <Welcome /> }
         </Route>
         <Route path="/games/game/:gameName" component={Single} />
         <Route path="/games/search/:query" component={Results} />
         <Route exact path="/games" component={Games} />
         <AuthRoute path="/login" component={Login} />
         <AuthRoute path="/signup" component={Signup} />
+        {/* <ProtectedRoute  path="/dashboard" component={Dashboard} /> */}
         <ProtectedRoute  path="/dashboard" component={Dashboard} />
         <ProtectedRoute  path="/dashboard/wishlist" component={Wishlist} />
-        <ProtectedRoute  path="/dashboard/collection" component={Collection} />
-        <ProtectedRoute  path="/dashboard/likes" component={Likes} />
+        <ProtectedRoute  exact path="/dashboard/likes" component={Likes} />
+        <ProtectedRoute  exact path="/dashboard/collection" component={Collection} />
+       
       </div>
     )
   }

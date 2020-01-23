@@ -78,9 +78,6 @@ class Single extends React.Component {
                     });
                 }
             )
-        // .then(
-        //     this.findGameInStore
-        // )
     }
     checkForCover(result){
         const game = result[0];

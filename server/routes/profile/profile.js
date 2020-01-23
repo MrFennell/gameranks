@@ -70,6 +70,7 @@ ProfileRoutes.post('/likes', async (req, res) => {
     
     try {
         const game = req.body;
+
         const sessionUser =  req.session.user.username;
         if(game){
             //search for user profile
@@ -101,6 +102,9 @@ ProfileRoutes.post('/likes', async (req, res) => {
 
                 }
             }
+        }
+        else{
+            res.send();
         }
     } catch (err) {
         res.status(400).send(parseError(err));

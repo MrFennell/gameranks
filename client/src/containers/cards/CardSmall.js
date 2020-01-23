@@ -5,6 +5,7 @@ import SmallThumb from 'components/thumbnails/SmallThumb';
 import LikeToggle from 'containers/cards/buttons/LikeToggle';
 import WantToggle from 'containers/cards/buttons/WantToggle';
 import OwnToggle from 'containers/cards/buttons/OwnToggle';
+import StarRating from 'containers/cards/buttons/StarRating';
 
 function CardSmall(props) {
 
@@ -25,7 +26,8 @@ function CardSmall(props) {
                             />
                         </div>
 
-                        <div className={isShown ? 'input-overlay' : 'hidden'}>
+                        {/* <div className={isShown ? 'input-overlay' : 'hidden'}> */}
+                        <div className='input-overlay'>
                             <Link to={{
                                 pathname:"/games/game/" + props.slug,
                                 state: {
@@ -34,7 +36,7 @@ function CardSmall(props) {
                                 }
                                 }}><p className='small-card-title'>{props.name}</p>
                             </Link>
-                            
+                            <StarRating />
                             <div className='buttons'>
                                 <WantToggle id={props.id} />
                                 <OwnToggle id={props.id} />
@@ -43,10 +45,11 @@ function CardSmall(props) {
                             {/* <p className='small-card-title'>{props.name}</p> */}
                             
                         </div>
+
                 </div>
                 
                 
-
+        
             </div>
         );
     

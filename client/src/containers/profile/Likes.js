@@ -4,7 +4,7 @@ import CardSmall from "containers/cards/CardSmall";
 
 const mapStateToProps = ({likes}) => ({likes});
 
-class Collection extends Component {
+class Likes extends Component {
     _isMounted = false;
 
     constructor(props) {
@@ -41,27 +41,32 @@ class Collection extends Component {
                 body: JSON.stringify({games})
             })
             .then(res => res.json())
-                .then (
-                    (result) => {
-                        if (this._isMounted){
-                            this.setState({
-                                gameResults: result,
-                            });
-                        }
-                    },
-                    (errors) => {
+
+            .then (
+                (result) => {
+                    if (this._isMounted && result.name !== "Error"){
                         this.setState({
-                            isLoaded: true,
-                            errors
+                            gameResults: result,
                         });
+                    }else{
+                        this.setState({
+                            gameResults: [],
+                        });
+                        
                     }
-                )
+                },
+                (errors) => {
+                    this.setState({
+                        errors
+                    });
+                }
+            )
         }
     
     render() {
-        const gameArray =  Object.values(this.state.gameResults);
-        if(gameArray !== []){
-
+        
+        if(this.state.gameResults !== []){
+            const gameArray =  Object.values(this.state.gameResults);
             return (
                 <div className="container">
 
@@ -78,13 +83,16 @@ class Collection extends Component {
                         />
                     ))}
                 </div>
-        )
+            )
 
-        }else return <div class='no-results'>Like some games to add them to this page!</div>
-        
+        }
+        else {
+            return (
+            <div class='no-results'>Like some games to add them to this page!</div>)
+        }
     }
 }
 
 export default connect(
     mapStateToProps
-)(Collection);
+)(Likes);

@@ -1,5 +1,6 @@
 $grey: grey;
-
+$white: #fff;
+$black: #000;
 h1, h2, h3, p, a {
     font-family: 'Roboto', sans-serif;
 }
@@ -32,13 +33,65 @@ h1, h2, h3, p, a {
         .hidden{
             display: none;
         }
+        
         .input-overlay{
+            position: absolute;
+            border-radius: 8px; 
+            height: 100%;
+            width: 100%;
+            top: 0;
+            background: rgba(0,0,0,0.8);
             .small-card-title{
                 position: absolute;
                 top: 20px;
                 text-align: center;
                 width: 100%;
+                color: $white;
+                :hover{
+                    color: blue;
+                }
             }
+            .star-container{
+                position: absolute;
+                bottom: 55px;
+                display:flex;
+                justify-content: space-around;
+                width: 80%;
+                margin-left: auto;
+                margin-right: auto;
+                left: 0;
+                right: 0;
+                .star{
+                    position: relative;
+                    display: inline-block;
+                    height: 20px;
+                    width: 20px;
+                    cursor: pointer;
+                
+                    .starA{
+                        font-size: 20px;
+                        display: inline-block; 
+                        position: absolute; 
+                        overflow: hidden; 
+                        top: 0px; 
+                        left: 0px; 
+                        color: blue;
+                        line-height: 0;
+                        width: 50%;
+                        z-index:9999;
+                    }
+                    .starB{
+                        font-size: 20px;
+                        display: inline-block; 
+                        position: absolute; 
+                        overflow: hidden; 
+                        top: 0px; 
+                        left: 0px; 
+                        line-height: 0;
+                    }
+                }
+            }
+            
             .buttons{
                 position: absolute;
                 bottom: 10px;
@@ -57,6 +110,9 @@ h1, h2, h3, p, a {
         
     }
 }
+
+
+
 .thumbnail-medium {
     border-radius: 8px; 
 }

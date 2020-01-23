@@ -20,21 +20,66 @@ h1, h2, h3, p, a {
       transition: opacity .3s; }
     .small-card .image-container .hidden {
       display: none; }
-    .small-card .image-container .input-overlay .small-card-title {
+    .small-card .image-container .input-overlay {
       position: absolute;
-      top: 20px;
-      text-align: center;
-      width: 100%; }
-    .small-card .image-container .input-overlay .buttons {
-      position: absolute;
-      bottom: 10px;
-      display: flex;
+      border-radius: 8px;
+      height: 100%;
       width: 100%;
-      align-items: center;
-      justify-content: space-evenly;
-      margin: auto; }
-      .small-card .image-container .input-overlay .buttons svg {
-        font-size: 30px; }
+      top: 0;
+      background: rgba(0, 0, 0, 0.8); }
+      .small-card .image-container .input-overlay .small-card-title {
+        position: absolute;
+        top: 20px;
+        text-align: center;
+        width: 100%;
+        color: #fff; }
+        .small-card .image-container .input-overlay .small-card-title :hover {
+          color: blue; }
+      .small-card .image-container .input-overlay .star-container {
+        position: absolute;
+        bottom: 55px;
+        display: flex;
+        justify-content: space-around;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0; }
+        .small-card .image-container .input-overlay .star-container .star {
+          position: relative;
+          display: inline-block;
+          height: 20px;
+          width: 20px;
+          cursor: pointer; }
+          .small-card .image-container .input-overlay .star-container .star .starA {
+            font-size: 20px;
+            display: inline-block;
+            position: absolute;
+            overflow: hidden;
+            top: 0px;
+            left: 0px;
+            color: blue;
+            line-height: 0;
+            width: 50%;
+            z-index: 9999; }
+          .small-card .image-container .input-overlay .star-container .star .starB {
+            font-size: 20px;
+            display: inline-block;
+            position: absolute;
+            overflow: hidden;
+            top: 0px;
+            left: 0px;
+            line-height: 0; }
+      .small-card .image-container .input-overlay .buttons {
+        position: absolute;
+        bottom: 10px;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-evenly;
+        margin: auto; }
+        .small-card .image-container .input-overlay .buttons svg {
+          font-size: 30px; }
 
 .thumbnail-medium {
   border-radius: 8px; }

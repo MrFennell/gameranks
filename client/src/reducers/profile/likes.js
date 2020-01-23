@@ -16,7 +16,6 @@ export default (state = [], {type, game}) => {
         }
             return game;
         case UPDATE_GAME_LIKE:
-            // const likes = game.likes;
             const likesFound = state.find(x => x.game_id === game.game_id);
             if (likesFound){
                 return state.filter(e => e.game_id !== game.game_id);
