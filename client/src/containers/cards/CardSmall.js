@@ -26,8 +26,8 @@ function CardSmall(props) {
                             />
                         </div>
 
-                        {/* <div className={isShown ? 'input-overlay' : 'hidden'}> */}
-                        <div className='input-overlay'>
+                        <div className={isShown ? 'input-overlay' : 'hidden'}>
+                        {/* <div className='input-overlay'> */}
                             <Link to={{
                                 pathname:"/games/game/" + props.slug,
                                 state: {
@@ -36,7 +36,7 @@ function CardSmall(props) {
                                 }
                                 }}><p className='small-card-title'>{props.name}</p>
                             </Link>
-                            <StarRating />
+                            <StarRating id={props.id}/>
                             <div className='buttons'>
                                 <WantToggle id={props.id} />
                                 <OwnToggle id={props.id} />

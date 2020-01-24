@@ -5,7 +5,7 @@ export const LOAD_PROFILE = 'LOAD_PROFILE';
 export const LOAD_LIKES = 'LOAD_LIKES';
 export const LOAD_OWNED = 'LOAD_OWNED';
 export const LOAD_WANT = 'LOAD_WANT';
-export const UPDATE_LIKE = 'UPDATE_LIKE';
+export const LOAD_RATINGS = 'LOAD_RATINGS';
 
 const loadUserProfile = profile => ({
     type: LOAD_PROFILE,
@@ -27,6 +27,12 @@ const loadUserWant = game => ({
     game
 });
 
+const loadUserRatings = game => ({
+    type: LOAD_RATINGS,
+    game
+});
+
+
 export const loadProfile = profile => async dispatch => {
     
         const response = await apiUtil.loadProfile(profile);
@@ -37,6 +43,7 @@ export const loadProfile = profile => async dispatch => {
                 dispatch(loadUserLikes(data.likes)),
                 dispatch(loadUserOwned(data.owned)),
                 dispatch(loadUserWant(data.want)),
+                dispatch(loadUserRatings(data.ratings)),
             ]) 
         }
         return dispatch(receiveErrors(data));

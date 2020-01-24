@@ -19,6 +19,9 @@ const ProfileSchema = new mongoose.Schema({
     owned: {
         type: Array,
     },
+    ratings: {
+        type: Array,
+    },
 
 }, {timestamps: true});
 

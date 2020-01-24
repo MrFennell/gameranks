@@ -48,6 +48,18 @@ export const updateWant = game => (
     })
 );
 
+
+export const updateRating = game => (
+    fetch("/api/profile/rating", {
+        method: "POST",
+        body: JSON.stringify(game),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+);
+
+
 export const fetchCovers = games => (
     fetch("/api/profile/want", {
         method: "POST",

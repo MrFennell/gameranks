@@ -6,6 +6,7 @@ import profile from './profile/profile';
 import likes from './profile/likes';
 import owned from './profile/owned';
 import want from './profile/want';
+import ratings from './profile/ratings';
 
 
 export default combineReducers({
@@ -15,5 +16,6 @@ export default combineReducers({
     profile,
     likes,
     owned,
-    want
+    want,
+    ratings
 });

@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 // import Rating from 'react-rating';
+import { connect } from 'react-redux';
+import { addRating, removeRating }from 'actions/profile/ratings';
 import { FaStar } from 'react-icons/fa';
+
+const mapStateToProps = ({ratings}) => ({
+    ratings
+});
+
+const mapDispatchToProps = (dispatch )=> ({
+    addRating: (e) => dispatch(addRating(e)),
+    removeRating: (e) => dispatch(removeRating(e)),
+});
 
 class StarRating extends Component {
     constructor(props) {
@@ -9,15 +20,53 @@ class StarRating extends Component {
             value: 0,
             starRating: 0,
             ratingSaved: 0,
-            starColor: 'white'
+            starColor: 'white',
+            rating:  false
         };
+    }
+    componentDidMount = () => this.searchGame();
+    componentDidUpdate(prevProps){
+        if (this.props.id !== prevProps.id){
+            this.searchGame();
+        }
+    }
+    searchGame = () => {
+        const ratingFound = this.props.ratings.find(e => e.game_id === this.props.id);
+       
+        if (ratingFound)
+            {
+                this.setState({
+                    rating: true, 
+                    ratingSaved: ratingFound.rating, 
+                    starRating: ratingFound.rating,
+                    starColor: 'orange',
+                })
+            }
     }
 
     handleClick(e) {
-        this.setState({
-            ratingSaved: e,
-            starColor: 'orange'
-        });
+
+        if (e === this.state.ratingSaved){ //clicking the same rating twice will reset rating
+           this.setState({
+                ratingSaved: 0,
+                starColor: 'yellow'
+            });
+            this.props.removeRating({
+                'id':this.props.id,
+                'rating':this.state.starRating
+                })
+        }
+        else{
+            this.setState({
+                ratingSaved: e,
+                starColor: 'orange'
+            });
+            this.props.addRating({
+                'id':this.props.id,
+                'rating':this.state.starRating
+                })
+        }
+        
     }
     mouseOver = (e) => {
         if (this.state.starColor === 'white'){
@@ -65,7 +114,6 @@ class StarRating extends Component {
                             onMouseOver={() => this.mouseOver(1)}
                             onClick={() => this.handleClick(1)}
                         >   
-                            {/* <rect width="300" height="100" style={rectFill} /> */}
                             <FaStar style={(stars === 1) ? iconTrue: iconFalse}/>
                         </div>
                         <div  className="starB"
@@ -158,4 +206,7 @@ class StarRating extends Component {
     }
 }
 
-export default StarRating;
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(StarRating);

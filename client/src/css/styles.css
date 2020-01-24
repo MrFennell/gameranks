@@ -39,8 +39,8 @@ h1, h2, h3, p, a {
         position: absolute;
         bottom: 55px;
         display: flex;
-        justify-content: space-around;
-        width: 80%;
+        justify-content: center;
+        width: 100%;
         margin-left: auto;
         margin-right: auto;
         left: 0;
@@ -48,11 +48,11 @@ h1, h2, h3, p, a {
         .small-card .image-container .input-overlay .star-container .star {
           position: relative;
           display: inline-block;
-          height: 20px;
-          width: 20px;
+          height: 25px;
+          width: 25px;
           cursor: pointer; }
           .small-card .image-container .input-overlay .star-container .star .starA {
-            font-size: 20px;
+            font-size: 25px;
             display: inline-block;
             position: absolute;
             overflow: hidden;
@@ -63,7 +63,7 @@ h1, h2, h3, p, a {
             width: 50%;
             z-index: 9999; }
           .small-card .image-container .input-overlay .star-container .star .starB {
-            font-size: 20px;
+            font-size: 25px;
             display: inline-block;
             position: absolute;
             overflow: hidden;
