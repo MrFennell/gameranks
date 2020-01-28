@@ -21,8 +21,8 @@ sessionRouter.post('', async (req, res) => {
             
             req.session.user = sessionUser
             if (sessionUser){
-                const profile = await Profile.findOne({username: sessionUser.username});
-                sessionUser.Profile = profile;
+                // const profile = await Profile.findOne({username: sessionUser.username});
+                // sessionUser.Profile = profile;
                 res.send(sessionUser);
             }
             else{

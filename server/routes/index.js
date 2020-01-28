@@ -9,7 +9,7 @@ export {
     userRoutes, 
     sessionRoutes, 
     PopularRoutes,
-    SingleGameRoutes, 
+    SingleGameRoutes,
     SearchRoutes,
     ProfileRoutes,
 };

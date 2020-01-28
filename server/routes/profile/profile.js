@@ -200,14 +200,24 @@ ProfileRoutes.post('/rating', async (req, res) => {
         const game = req.body;
         const sessionUser =  req.session.user.username;
         if(game){
-            //search for user profile
             const sessionUser =  req.session.user.username;
-            const profile = await Profile.findOne({username: sessionUser});
+            const profile = await Profile.findOne({username: sessionUser}); //search for user profile
             const newRating = game.newRating;
             const rating = game.rating;
             if (profile){
+                const previousRating = await Profile.findOne({username: sessionUser, "ratings.game_id":game.id});
+                if (newRating === true && previousRating){ //update existing rating
 
-                if (newRating === true){
+                    await Profile.updateOne(
+                        {"username": sessionUser, "ratings.game_id":game.id},
+                        {$set:{'ratings.$.rating':rating}}
+                    )
+                
+                    const game_response = {game_id: game.id, rating: game.rating}
+                    res.send(game_response);
+                }
+                else if (newRating === true && !previousRating){ //add new game and rating entry
+
                     await Profile.updateOne(
                         {"username": sessionUser},
                         {$push:{'ratings':{'game_id':game.id, 'rating':game.rating}}}
@@ -216,8 +226,7 @@ ProfileRoutes.post('/rating', async (req, res) => {
                     const game_response = {game_id: game.id, rating: game.rating}
                     res.send(game_response);
                 }
-                
-               else if (newRating === false){
+                else if (newRating === false){//delete rating
                       
                     await Profile.updateOne(
                         {"username": sessionUser},

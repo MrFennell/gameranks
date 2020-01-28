@@ -44,7 +44,7 @@ export const loadProfile = profile => async dispatch => {
                 dispatch(loadUserOwned(data.owned)),
                 dispatch(loadUserWant(data.want)),
                 dispatch(loadUserRatings(data.ratings)),
-            ]) 
+            ])
         }
         return dispatch(receiveErrors(data));
 }
